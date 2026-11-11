@@ -1,0 +1,7 @@
+<svg width="160" height="160" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- a page divided into fields: within-document structure -->
+  <rect x="14" y="10" width="52" height="60" rx="5" fill="none" stroke="#1F7A6C" stroke-width="5"/>
+  <line x1="14" y1="28" x2="66" y2="28" stroke="#1F7A6C" stroke-width="4"/>
+  <line x1="40" y1="28" x2="40" y2="70" stroke="#1F7A6C" stroke-width="4"/>
+  <line x1="14" y1="46" x2="66" y2="46" stroke="#1F7A6C" stroke-width="4"/>
+</svg>

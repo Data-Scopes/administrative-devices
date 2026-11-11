@@ -1,0 +1,114 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import LayerTrio from '../components/LayerTrio.astro';
+import SubprojectCard from '../components/SubprojectCard.astro';
+import hero from '../assets/images/flat-vs-structured.png';
+import { site } from '../data/site';
+import { url } from '../lib/url';
+
+const subprojects = (await getCollection('subprojects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base>
+  <section class="intro container">
+    <p class="eyebrow">Open eScience project · 2026</p>
+    <h1>{site.name}</h1>
+    <p class="lede">
+      Clerks and archivists organised their records with indexes, cross-references, sections and standard forms.
+      Digitisation turns all of that into a long, numbered row of scans. We build open software that recovers the
+      structure.
+    </p>
+    <p class="actions">
+      <a class="button" href={url('about/')}>About the project</a>
+      <a class="button ghost" href={url('subprojects/')}>Explore the sub-projects</a>
+    </p>
+  </section>
+
+  <figure class="hero">
+    <div class="container">
+      <Image
+        src={hero}
+        alt="Six scans of a 1754 book of resolutions of the States General, first as a plain row of images, then with the index entries, sessions, attendance lists and resolutions marked, and arrows from index entries to the resolutions they point to."
+        widths={[800, 1200, 1800, 2400]}
+        sizes="(max-width: 1160px) 100vw, 1160px"
+        loading="eager"
+      />
+      <figcaption>
+        The same scans as digitised (top) and with their structure recovered (bottom). Nationaal Archief 1.01.02,
+        inv. 3809, scans 63–68.
+      </figcaption>
+    </div>
+  </figure>
+
+  <section class="section container">
+    <p class="eyebrow">What we look for</p>
+    <h2>Three layers of structure</h2>
+    <p class="prose">
+      Administrative devices work at three levels. Each layer is the subject of one of the project's objectives,
+      and the methods build from the document upward.
+    </p>
+    <LayerTrio />
+  </section>
+
+  <section class="section container">
+    <p class="eyebrow">Sub-projects</p>
+    <h2>Software, data and case studies</h2>
+    <p class="prose">
+      The project is made up of separate packages and case studies. Each has its own repository; these pages
+      summarise them and link to their documentation.
+    </p>
+    <div class="grid">
+      {subprojects.slice(0, 6).map((entry) => <SubprojectCard entry={entry} />)}
+    </div>
+    <p class="more"><a href={url('subprojects/')}>All sub-projects →</a></p>
+  </section>
+</Base>
+
+<style>
+  .intro {
+    padding-top: clamp(40px, 8vw, 88px);
+    padding-bottom: 36px;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .button {
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .button.ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .hero {
+    margin: 0;
+    background: var(--night);
+    padding: clamp(12px, 3vw, 28px) 0;
+  }
+  .hero :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  figcaption {
+    color: #b8bdc2;
+    font-size: 0.88rem;
+    margin-top: 10px;
+  }
+  .more {
+    margin-top: 24px;
+    font-weight: 600;
+  }
+</style>

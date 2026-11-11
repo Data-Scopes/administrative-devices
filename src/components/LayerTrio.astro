@@ -1,0 +1,69 @@
+---
+// The three layers side by side, each with its icon, scope and objective.
+import { layers } from '../data/layers';
+
+interface Props {
+  showObjective?: boolean;
+}
+const { showObjective = false } = Astro.props;
+---
+
+<ol class="trio">
+  {
+    layers.map((l, i) => (
+      <li style={`--c: ${l.colour}`}>
+        <img src={l.icon} alt="" width="56" height="56" />
+        <p class="where">Layer {i + 1} · {l.where}</p>
+        <h3>{l.name}</h3>
+        <p>{l.description}</p>
+        {showObjective && (
+          <p class="objective">
+            <strong>Objective {i + 1}: {l.objective}.</strong> {l.objectiveText}
+          </p>
+        )}
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .trio {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+  li {
+    border-top: 4px solid var(--c);
+    background: var(--paper-card);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 22px;
+  }
+  h3 {
+    margin: 0.2em 0 0.4em;
+    color: var(--c);
+  }
+  .where {
+    margin: 12px 0 0;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  p {
+    margin-bottom: 0.6em;
+    color: var(--ink-soft);
+  }
+  .objective {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.95rem;
+  }
+  .objective strong {
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import LayerBadge from './LayerBadge.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  entry: CollectionEntry<'subprojects'>;
+}
+const { entry } = Astro.props;
+const d = entry.data;
+---
+
+<article class="card">
+  <h3><a href={url(`subprojects/${entry.id}/`)}>{d.title}</a></h3>
+  <p>{d.tagline}</p>
+  <div class="badges">
+    {d.layers.map((l) => <LayerBadge layer={l} />)}
+  </div>
+  <p class="meta">
+    {d.stages.length > 0 && <span>Stage {d.stages.join(', ')}</span>}
+    {d.visibility === 'private' && <span>Code not yet public</span>}
+  </p>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.15s;
+  }
+  .card:hover {
+    border-color: var(--ink-faint);
+  }
+  h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+  p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .meta {
+    display: flex;
+    gap: 14px;
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin-top: auto;
+  }
+</style>

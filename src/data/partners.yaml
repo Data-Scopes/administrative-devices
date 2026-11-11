@@ -1,0 +1,41 @@
+# Partner institutions. `kind`: lead | partner | support | archive.
+# Source: proposal 7c and the project announcement draft (2026-10-30).
+- id: huygens
+  name: Huygens Institute
+  short: KNAW Humanities Cluster
+  kind: lead
+  url: https://www.huygens.knaw.nl/en/
+  order: 1
+- id: huc-di
+  name: KNAW Humanities Cluster, Digital Infrastructure
+  kind: partner
+  url: https://huc.knaw.nl/
+  order: 2
+- id: niod
+  name: NIOD Institute for War, Holocaust and Genocide Studies
+  kind: partner
+  url: https://www.niod.nl/en
+  order: 3
+- id: uva
+  name: University of Amsterdam
+  kind: partner
+  url: https://www.uva.nl/en
+  order: 4
+- id: nlesc
+  name: Netherlands eScience Center
+  short: Open eScience Call 2026
+  kind: support
+  url: https://www.esciencecenter.nl/
+  order: 5
+- id: nationaal-archief
+  name: Nationaal Archief
+  short: Resolutions of the States General; migrant registration cards
+  kind: archive
+  url: https://www.nationaalarchief.nl/
+  order: 10
+- id: stadsarchief-amsterdam
+  name: Amsterdam City Archives
+  short: Notarial deeds; housing cards
+  kind: archive
+  url: https://www.amsterdam.nl/stadsarchief/
+  order: 11

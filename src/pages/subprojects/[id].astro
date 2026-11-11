@@ -1,0 +1,116 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import LayerBadge from '../../components/LayerBadge.astro';
+import { url } from '../../lib/url';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('subprojects');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const groupLabel = d.group === 'core' ? 'Core toolkit' : 'REPUBLIC case';
+const statusLabel = { active: 'Active', planned: 'Planned', paused: 'Paused', done: 'Completed' }[d.status];
+---
+
+<Base title={d.title} description={d.tagline}>
+  <article class="container layout">
+    <div class="main">
+      <p class="eyebrow"><a href={url('subprojects/')}>Sub-projects</a> · {groupLabel}</p>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.tagline}</p>
+      <div class="prose body">
+        <Content />
+      </div>
+    </div>
+    <aside class="facts">
+      <dl>
+        <dt>Layers</dt>
+        <dd class="badges">{d.layers.map((l) => <LayerBadge layer={l} />)}</dd>
+        {
+          d.stages.length > 0 && (
+            <>
+              <dt>Stage</dt>
+              <dd>{d.stages.join(', ')}</dd>
+            </>
+          )
+        }
+        <dt>Status</dt>
+        <dd>{statusLabel}</dd>
+        <dt>Code</dt>
+        <dd>
+          {
+            d.repo && d.visibility === 'public' ? (
+              <a href={`https://github.com/${d.repo}`}>{d.repo}</a>
+            ) : (
+              'Not yet public'
+            )
+          }
+        </dd>
+        {
+          d.docs && (
+            <>
+              <dt>Documentation</dt>
+              <dd>
+                <a href={d.docs}>Full documentation →</a>
+              </dd>
+            </>
+          )
+        }
+      </dl>
+    </aside>
+  </article>
+</Base>
+
+<style>
+  .layout {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: clamp(40px, 6vw, 72px);
+  }
+  @media (min-width: 900px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) 280px;
+    }
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  .body {
+    margin-top: 28px;
+  }
+  .facts {
+    align-self: start;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  dl {
+    margin: 0;
+  }
+  dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 14px;
+  }
+  dt:first-child {
+    margin-top: 0;
+  }
+  dd {
+    margin: 4px 0 0;
+    overflow-wrap: anywhere;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+</style>

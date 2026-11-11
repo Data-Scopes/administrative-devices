@@ -1,0 +1,37 @@
+# Team members named in the proposal (section 7c). `affiliation` is an id from partners.yaml.
+# TODO: confirm every role and affiliation; add the two eScience Center RSEs once known.
+- id: marijn-koolen
+  name: Marijn Koolen
+  role: Project lead (DHLab)
+  affiliation: huygens
+  order: 1
+- id: rik-hoekstra
+  name: Rik Hoekstra
+  role: TODO
+  affiliation: huygens # TODO confirm
+  order: 2
+- id: melvin-wevers
+  name: Melvin Wevers
+  role: TODO
+  affiliation: uva # TODO confirm
+  order: 3
+- id: marijke-van-faassen
+  name: Marijke van Faassen
+  role: TODO
+  affiliation: huygens # TODO confirm
+  order: 4
+- id: gerhard-de-kok
+  name: Gerhard de Kok
+  role: TODO
+  # affiliation: TODO
+  order: 5
+- id: annelies-van-nispen
+  name: Annelies van Nispen
+  role: Archival professional
+  affiliation: niod
+  order: 6
+- id: carlijn-keijzer
+  name: Carlijn Keijzer
+  role: Archival professional
+  affiliation: niod
+  order: 7

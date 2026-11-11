@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const partners = (await getCollection('partners')).sort((a, b) => a.data.order - b.data.order);
+const partnerName = Object.fromEntries(partners.map((p) => [p.id, p.data.name]));
+
+const institutions = partners.filter((p) => p.data.kind !== 'archive');
+const archives = partners.filter((p) => p.data.kind === 'archive');
+const kindLabel = { lead: 'Lead', partner: 'Partner', support: 'Funding and engineering support', archive: 'Archive' };
+const show = (s?: string) => (s && s !== 'TODO' ? s : undefined);
+---
+
+<Base title="Team" description="The people and institutions behind Administrative Devices.">
+  <div class="container">
+    <header class="section head">
+      <p class="eyebrow">Team and partners</p>
+      <h1>Who we are</h1>
+      <p class="lede">
+        The project brings together archival theory, historical domain knowledge and computational methods. It is led by
+        the Huygens Institute, with two research software engineers from the Netherlands eScience Center.
+      </p>
+    </header>
+
+    <section>
+      <h2>Team</h2>
+      <ul class="people">
+        {
+          team.map((p) => (
+            <li>
+              <p class="pname">{p.data.url ? <a href={p.data.url}>{p.data.name}</a> : p.data.name}</p>
+              {show(p.data.role) && <p>{p.data.role}</p>}
+              {p.data.affiliation && <p class="aff">{partnerName[p.data.affiliation]}</p>}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Institutions</h2>
+      <ul class="orgs">
+        {
+          institutions.map((p) => (
+            <li>
+              <p class="kind">{kindLabel[p.data.kind]}</p>
+              <p class="pname">{p.data.url ? <a href={p.data.url}>{p.data.name}</a> : p.data.name}</p>
+              {p.data.short && <p class="aff">{p.data.short}</p>}
+            </li>
+          ))
+        }
+      </ul>
+      <h3>Archives providing use cases</h3>
+      <ul class="orgs">
+        {
+          archives.map((p) => (
+            <li>
+              <p class="pname">{p.data.url ? <a href={p.data.url}>{p.data.name}</a> : p.data.name}</p>
+              {p.data.short && <p class="aff">{p.data.short}</p>}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .head {
+    padding-bottom: 8px;
+  }
+  .people,
+  .orgs {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+  li {
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  li p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .pname {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .pname a {
+    color: var(--ink);
+  }
+  .aff {
+    color: var(--ink-faint);
+  }
+  .kind {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+</style>

@@ -1,0 +1,170 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import LayerTrio from '../components/LayerTrio.astro';
+import schematic from '../assets/images/schematic.png';
+// Text drafted from the proposal (OEC-2026, section 7). TODO: review before launch.
+---
+
+<Base title="About" description="The research idea behind Administrative Devices: the three layers of archival structure, the stages of the work, and the archives it is tested on.">
+  <article class="container">
+    <header class="section head">
+      <p class="eyebrow">About the project</p>
+      <h1>What digitisation leaves out</h1>
+      <p class="lede">
+        Physical archives are carefully organised information systems. Digitisation keeps the text and drops the
+        organisation. Administrative Devices develops methods to recover that organisation and turn it into data.
+      </p>
+    </header>
+
+    <section class="section prose">
+      <h2>The problem</h2>
+      <p>
+        Inventories describe boxes or books. These contain folders or sections, which contain documents with their
+        own internal structure. At every level there are features that guide the reader: documents grouped by origin,
+        period or subject, indexes listing them by topic or date, notes in the margin pointing to related material. We
+        call these features <em>administrative devices</em>. They show how information was created, managed and used.
+      </p>
+      <p>
+        Digitisation flattens this hierarchy into a sequence of scans with little more than an inventory number and a
+        position in the sequence. Text recognition makes the pages searchable, but the search returns isolated pages.
+        It cannot tell you what kinds of documents exist, how many there are, where a document sits in the archive, or
+        which resolution an index entry points to. Keyword search over pages without their context is becoming the
+        default way of doing historical research, and the source-critical distortions that come with it are spreading.
+      </p>
+      <figure class="fig">
+        <Image
+          src={schematic}
+          alt="Schematic of a sequence of scans of one inventory number, with documents of different types and lengths running across columns, pages and scans."
+          widths={[700, 1100, 1600]}
+          sizes="(max-width: 760px) 100vw, 720px"
+        />
+        <figcaption>
+          One inventory number as a sequence of scans. Documents of different types and lengths start anywhere on a page
+          and continue across columns, pages and scans.
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="section">
+      <h2>Three layers, three objectives</h2>
+      <p class="prose">
+        We distinguish three connected dimensions of archival organisation. They are present in most archives, and
+        especially regular in administrative archives: the records governments and institutions made to run their
+        business.
+      </p>
+      <LayerTrio showObjective />
+    </section>
+
+    <section class="section prose">
+      <h2>Research question</h2>
+      <blockquote>
+        How can we detect, represent, and operationalise the hierarchical structures of digitised historical archives, to
+        connect the three levels of structure and transform implicit organisational systems into structured, analysable
+        datasets?
+      </blockquote>
+      <p>
+        Recovered structure makes analysis possible that keyword search cannot support. For example, it lets you count
+        and compare document types over time, search with filters and facets over the archive's hierarchy, and see
+        where each result sits in the archive. In the resolutions of the States General it shows, for instance, that
+        far more diplomatic missives were discussed on Mondays to Wednesdays than on Thursdays or Fridays.
+      </p>
+    </section>
+
+    <section class="section prose">
+      <h2>How we work</h2>
+      <p>
+        Instead of relying on one model, we combine visual language models with cheaper statistical, clustering and
+        sequence methods. A central question is when inexpensive unsupervised analysis is enough and when the costlier
+        reasoning of a VLM is needed. The stages are also a dependency order: each early, cheap stage has value on its
+        own.
+      </p>
+      <ol class="stages">
+        <li>
+          <h3>Stage 1 · Unsupervised exploration</h3>
+          <p>
+            Characterise and cluster the image streams of an archive, detect formulaic language, and discover recurring
+            structures, so that ground truth can be sampled in a balanced way before any annotation exists.
+          </p>
+        </li>
+        <li>
+          <h3>Stage 2 · Supervised extraction</h3>
+          <p>
+            Recognise document and element templates, segment documents across physical and logical boundaries, detect
+            template instances in sequences, identify ordering principles, and find larger groupings such as dossiers
+            and sessions.
+          </p>
+        </li>
+        <li>
+          <h3>Stage 3 · Hierarchical integration</h3>
+          <p>
+            Link everything to finding aids and inventories, with modular components that read and write shared
+            formats, record provenance, and can be combined in a notebook.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section prose">
+      <h2>Use cases</h2>
+      <p>
+        The main use case is the <strong>Resolutions of the States General (1576–1796)</strong>: around 700,000
+        resolutions from 220 years of daily meetings, on 537,000 pages in 657 books. They are already transcribed, and
+        extensive ground truth exists. Further cases bring different structural challenges:
+      </p>
+      <ul>
+        <li>the wider States General archive, including the books of correspondence (Nationaal Archief);</li>
+        <li>estate records of missing persons, with family trees and forms (NIOD);</li>
+        <li>notarial deeds of Amsterdam notaries, and housing cards (Amsterdam City Archives);</li>
+        <li>migrant registration cards (Nationaal Archief).</li>
+      </ul>
+    </section>
+  </article>
+</Base>
+
+<style>
+  .head {
+    padding-bottom: 24px;
+  }
+  .section.prose,
+  .section {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  blockquote {
+    margin: 0 0 1.2em;
+    padding: 4px 0 4px 20px;
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+  .fig {
+    margin: 28px 0 0;
+  }
+  .fig :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+  }
+  .fig figcaption {
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    margin-top: 8px;
+  }
+  .stages {
+    list-style: none;
+    padding: 0;
+    counter-reset: none;
+  }
+  .stages li {
+    border-left: 2px solid var(--rule);
+    padding: 2px 0 2px 20px;
+    margin-bottom: 18px;
+  }
+  .stages h3 {
+    margin: 0 0 0.3em;
+    font-size: 1.15rem;
+  }
+</style>

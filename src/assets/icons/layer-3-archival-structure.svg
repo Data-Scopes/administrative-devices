@@ -1,0 +1,6 @@
+<svg width="160" height="160" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- nested containment: collection down to item -->
+  <rect x="6" y="6" width="68" height="68" rx="8" fill="none" stroke="#B4562B" stroke-width="5"/>
+  <rect x="22" y="22" width="36" height="36" rx="6" fill="none" stroke="#B4562B" stroke-width="5"/>
+  <rect x="34" y="34" width="12" height="12" rx="3" fill="#B4562B"/>
+</svg>

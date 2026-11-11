@@ -1,0 +1,29 @@
+---
+import { layerById, type LayerId } from '../data/layers';
+
+interface Props {
+  layer: LayerId;
+}
+const l = layerById[Astro.props.layer];
+---
+
+<span class="badge" style={`--c: ${l.colour}`}>
+  <img src={l.icon} alt="" width="16" height="16" />
+  {l.name}
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c);
+    border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+    background: color-mix(in srgb, var(--c) 7%, transparent);
+    border-radius: 999px;
+    padding: 2px 10px 2px 6px;
+    white-space: nowrap;
+  }
+</style>

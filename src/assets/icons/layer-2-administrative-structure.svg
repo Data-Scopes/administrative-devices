@@ -1,0 +1,6 @@
+<svg width="160" height="160" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- two documents linked by reference: structure across documents -->
+  <rect x="8" y="16" width="34" height="46" rx="4" fill="none" stroke="#2C5F7C" stroke-width="5"/>
+  <rect x="38" y="16" width="34" height="46" rx="4" fill="none" stroke="#2C5F7C" stroke-width="5" opacity="0.5"/>
+  <path d="M26,39 C34,25 46,25 54,39" fill="none" stroke="#2C5F7C" stroke-width="5" stroke-linecap="round"/>
+</svg>

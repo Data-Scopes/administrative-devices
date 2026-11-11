@@ -1,0 +1,67 @@
+---
+import { site } from '../data/site';
+import { url } from '../lib/url';
+---
+
+<footer class="site-footer">
+  <div class="container cols">
+    <div>
+      <p class="name">{site.name}</p>
+      <p>{site.tagline}.</p>
+      <p class="small">Funded by the {site.funder}.</p>
+    </div>
+    <div>
+      <p class="head">Site</p>
+      <ul>
+        <li><a href={url('about/')}>About the project</a></li>
+        <li><a href={url('subprojects/')}>Sub-projects</a></li>
+        <li><a href={url('team/')}>Team and partners</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="head">Elsewhere</p>
+      <ul>
+        <li><a href={site.github}>Code on GitHub</a></li>
+        {site.contact && <li><a href={`mailto:${site.contact}`}>Contact</a></li>}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: 64px;
+    border-top: 1px solid var(--rule);
+    background: var(--paper-deep);
+    padding: 40px 0 48px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .cols {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  }
+  .name {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 0.3em;
+  }
+  .head {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4em;
+  }
+  .small {
+    font-size: 0.85rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li + li {
+    margin-top: 4px;
+  }
+</style>

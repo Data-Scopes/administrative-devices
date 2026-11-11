@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- a bound volume viewed side-on, with staggered finding tabs cut into the fore-edge -->
+  <rect x="8" y="10" width="10" height="100" rx="3" fill="#21262B"/>
+  <rect x="18" y="10" width="70" height="100" rx="2" fill="none" stroke="#21262B" stroke-width="4"/>
+  <line x1="18" y1="35" x2="88" y2="35" stroke="#21262B" stroke-width="1.5" opacity="0.35"/>
+  <line x1="18" y1="60" x2="88" y2="60" stroke="#21262B" stroke-width="1.5" opacity="0.35"/>
+  <line x1="18" y1="85" x2="88" y2="85" stroke="#21262B" stroke-width="1.5" opacity="0.35"/>
+
+  <path d="M88,14 h14 v18 h-14 z" fill="#C79A3B"/>
+  <path d="M88,39 h20 v18 h-20 z" fill="#C79A3B"/>
+  <path d="M88,64 h14 v18 h-14 z" fill="#C79A3B"/>
+  <path d="M88,89 h20 v16 h-20 z" fill="#C79A3B"/>
+
+  <!-- marks the active, longer tab as the access point -->
+  <circle cx="101" cy="48" r="3.5" fill="#21262B"/>
+</svg>

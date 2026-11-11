@@ -1,0 +1,59 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Repository variables (Settings → Secrets and variables → Actions → Variables).
+      # With a custom domain: SITE_URL=https://<domain>, BASE_PATH=/ (and add public/CNAME).
+      # Without one: leave both unset to serve at https://data-scopes.github.io/administrative-devices/.
+      SITE_URL: ${{ vars.SITE_URL || 'https://data-scopes.github.io' }}
+      BASE_PATH: ${{ vars.BASE_PATH || '/administrative-devices' }}
+      HAS_SYNC_TOKEN: ${{ secrets.SUBPROJECT_READ_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Optional: pull site/summary.md from each sub-project repo (PLAN.md, "Summaries synced ...").
+      # Needs a fine-grained PAT with read-only access to contents of those repos, stored as a secret.
+      - name: Sync sub-project summaries
+        env:
+          GITHUB_TOKEN: ${{ secrets.SUBPROJECT_READ_TOKEN }}
+        if: ${{ env.HAS_SYNC_TOKEN == 'true' }}
+        run: npm run sync
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

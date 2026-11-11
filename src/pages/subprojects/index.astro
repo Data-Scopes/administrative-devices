@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SubprojectCard from '../../components/SubprojectCard.astro';
+
+const all = (await getCollection('subprojects')).sort((a, b) => a.data.order - b.data.order);
+const groups = [
+  {
+    id: 'core',
+    title: 'Core toolkit',
+    text: 'Reusable packages for analysing the structure of digitised archives, and the shared ground truth.',
+  },
+  {
+    id: 'republic',
+    title: 'REPUBLIC case',
+    text: 'The resolutions and letter books of the States General of the Dutch Republic: the main use case.',
+  },
+] as const;
+---
+
+<Base title="Sub-projects" description="The packages and case studies that make up Administrative Devices.">
+  <div class="container">
+    <header class="section head">
+      <p class="eyebrow">Sub-projects</p>
+      <h1>The parts of the project</h1>
+      <p class="lede">
+        Each sub-project has its own repository and, where it has one, its own documentation site. These pages say what
+        each part does, which layer of structure it works on, and where to find more.
+      </p>
+    </header>
+    {
+      groups.map((g) => (
+        <section class="group">
+          <h2>{g.title}</h2>
+          <p class="prose">{g.text}</p>
+          <div class="grid">
+            {all
+              .filter((e) => e.data.group === g.id)
+              .map((entry) => (
+                <SubprojectCard entry={entry} />
+              ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .head {
+    padding-bottom: 8px;
+  }
+  .group {
+    margin-bottom: 56px;
+  }
+  .group h2 {
+    margin-top: 0.8em;
+  }
+</style>
