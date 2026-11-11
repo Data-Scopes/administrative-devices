@@ -21,6 +21,7 @@ The website is the public backbone of the Administrative Devices project (Open e
 | D2 | Hosting | **GitHub Pages**, repo `Data-Scopes/administrative-devices`, deployed by GitHub Actions | Public repo. |
 | D3 | Domain | **administrative-devices.org**; `administrative-devices.net` 301-forwards to it at the registrar | Decided 2026-11-11. Set in `public/CNAME`, `astro.config.mjs` and the workflow. Option A/B/C for sub-sites is still open (below); the scaffold follows A. |
 | D10 | Repo visibility | **Private until launch** | Decided 2026-11-11. The org is on the free plan, so Pages only works once the repo is public; until then the deploy job fails on each push (the build passes). |
+| D12 | Sub-project sites | **`site/` in each sub-project repo, pulled into the hub** and served at `/subprojects/<id>/<page>/` | Decided 2026-11-11, settling option A/B/C below in favour of A. Works for private repos (token), one domain and design. Separate API docs (e.g. Sphinx) may still go to `docs.administrative-devices.org`. Conventions: `docs/subproject-sites.md`. First two: republic-segmentation, republic-classification. |
 | D11 | Scan reuse | **Nationaal Archief scans are CC0** when they carry a download button and a CC0/Public Domain mark | [NA terms](https://nationaalarchief.nl/research/gebruik-van-scans-van-fotos-kaarten-en-documenten). Credit not required; we give one anyway: "Nationaal Archief, [archive], [archive no.], inv. [no.]". Other archives' scans need their own check. |
 | D4 | Language | **English only** | No i18n routing. Adding it later in Astro is a contained change. |
 | D5 | Sub-projects shown | **Core toolkit** (archival-structures, archival-language/LotA, formulation) and **REPUBLIC case** (republic-segmentation, -classification, -letter-segmentation, republic_ner_matching) | NAMA and VOC start pages are left out for now. They can be added later as one Markdown file each. |
@@ -100,7 +101,7 @@ republic-classification, the hub summary is the only public page until they go p
 
 ## Open questions
 
-- Option A, B or C above (the domain itself is settled, D3).
+- ~~Option A, B or C above~~: settled by D12 (A, with sub-project pages pulled into the hub).
 - Team: roles and affiliations for everyone (marked `TODO` in `src/data/team.yaml`); the two eScience RSEs.
 - Project start date and duration (the announcement draft is missing these too).
 - Contact address for the site footer.

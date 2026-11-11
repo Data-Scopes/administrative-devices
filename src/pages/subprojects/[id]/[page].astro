@@ -1,0 +1,35 @@
+---
+import { getEntry, render } from 'astro:content';
+import Subproject from '../../../layouts/Subproject.astro';
+import { getSubpages, splitSubpageId } from '../../../lib/subprojects';
+
+export async function getStaticPaths() {
+  const pages = await getSubpages();
+  const paths = [];
+  for (const page of pages) {
+    const { project, page: slug } = splitSubpageId(page.id);
+    const entry = await getEntry('subprojects', project);
+    if (!entry) throw new Error(`subpages/${page.id}: no sub-project "${project}" in src/content/subprojects/`);
+    paths.push({ params: { id: project, page: slug }, props: { entry, page } });
+  }
+  return paths;
+}
+
+const { entry, page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Subproject entry={entry} pageTitle={page.data.title} description={page.data.description}>
+  <h1>{page.data.title}</h1>
+  {page.data.description && <p class="lede">{page.data.description}</p>}
+  {page.data.draft && <p class="draft-note">Draft: only shown in development builds.</p>}
+  <div class="prose body">
+    <Content />
+  </div>
+</Subproject>
+
+<style>
+  .body {
+    margin-top: 28px;
+  }
+</style>

@@ -23,6 +23,19 @@ const subprojects = defineCollection({
   }),
 });
 
+// Further pages of a sub-project's site: src/content/subpages/<subproject-id>/<page>.md, served at
+// /subprojects/<subproject-id>/<page>/. Synced from site/pages/ in the sub-project repo (scripts/sync-subprojects.mjs).
+const subpages = defineCollection({
+  loader: glob({ pattern: '*/*.md', base: './src/content/subpages' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    nav: z.string().optional(), // short label for the sub-project menu; defaults to title
+    order: z.number().default(100),
+    draft: z.boolean().default(false), // drafts are built in dev only
+  }),
+});
+
 const team = defineCollection({
   loader: file('src/data/team.yaml'),
   schema: z.object({
@@ -45,4 +58,4 @@ const partners = defineCollection({
   }),
 });
 
-export const collections = { subprojects, team, partners };
+export const collections = { subprojects, subpages, team, partners };

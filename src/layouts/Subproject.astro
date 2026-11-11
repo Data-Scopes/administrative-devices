@@ -1,0 +1,199 @@
+---
+// Shared frame for a sub-project's pages: its overview (/subprojects/<id>/) and further pages
+// (/subprojects/<id>/<page>/). The menu lists the overview plus every page synced from the sub-project's site/.
+import Base from './Base.astro';
+import LayerBadge from '../components/LayerBadge.astro';
+import { url } from '../lib/url';
+import { getSubpages, splitSubpageId, type Subproject } from '../lib/subprojects';
+
+interface Props {
+  entry: Subproject;
+  pageTitle?: string; // set on sub-pages; absent on the overview
+  description?: string;
+}
+
+const { entry, pageTitle, description } = Astro.props;
+const d = entry.data;
+const pages = await getSubpages(entry.id);
+const groupLabel = d.group === 'core' ? 'Core toolkit' : 'REPUBLIC case';
+const statusLabel = { active: 'Active', planned: 'Planned', paused: 'Paused', done: 'Completed' }[d.status];
+const here = Astro.url.pathname;
+const menu = [
+  { href: url(`subprojects/${entry.id}/`), label: 'Overview' },
+  ...pages.map((p) => ({
+    href: url(`subprojects/${entry.id}/${splitSubpageId(p.id).page}/`),
+    label: p.data.nav ?? p.data.title,
+  })),
+];
+---
+
+<Base title={pageTitle ? `${pageTitle} · ${d.title}` : d.title} description={description ?? d.tagline}>
+  <div class="container">
+    <header class="head">
+      <p class="eyebrow"><a href={url('subprojects/')}>Sub-projects</a> · {groupLabel}</p>
+      <p class="project-title"><a href={menu[0].href}>{d.title}</a></p>
+      {
+        menu.length > 1 && (
+          <nav class="menu" aria-label={`${d.title} pages`}>
+            <ul>
+              {menu.map((m) => (
+                <li>
+                  <a href={m.href} aria-current={here === m.href ? 'page' : undefined}>
+                    {m.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+    </header>
+
+    <div class="layout">
+      <article class="main">
+        <slot />
+      </article>
+      <aside class="facts">
+        <dl>
+          <dt>Layers</dt>
+          <dd class="badges">{d.layers.map((l) => <LayerBadge layer={l} />)}</dd>
+          {
+            d.stages.length > 0 && (
+              <>
+                <dt>Stage</dt>
+                <dd>{d.stages.join(', ')}</dd>
+              </>
+            )
+          }
+          <dt>Status</dt>
+          <dd>{statusLabel}</dd>
+          <dt>Code</dt>
+          <dd>
+            {d.repo && d.visibility === 'public' ? <a href={`https://github.com/${d.repo}`}>{d.repo}</a> : 'Not yet public'}
+          </dd>
+          {
+            d.docs && (
+              <>
+                <dt>Documentation</dt>
+                <dd>
+                  <a href={d.docs}>Full documentation →</a>
+                </dd>
+              </>
+            )
+          }
+        </dl>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .head {
+    padding-top: clamp(36px, 5vw, 60px);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 36px;
+  }
+  .eyebrow a {
+    color: inherit;
+  }
+  .project-title {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 14px;
+  }
+  .project-title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .menu ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    margin: 0;
+    padding: 0;
+  }
+  .menu a {
+    display: inline-block;
+    padding: 8px 0 10px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .menu a:hover {
+    color: var(--ink);
+  }
+  .menu a[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+  .layout {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr) 260px;
+    }
+  }
+  .main {
+    min-width: 0;
+  }
+  .main :global(h1) {
+    margin-bottom: 0.3em;
+  }
+  .main :global(table) {
+    border-collapse: collapse;
+    margin: 0 0 1.2em;
+    font-size: 0.95rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .main :global(th),
+  .main :global(td) {
+    text-align: left;
+    padding: 6px 12px 6px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .main :global(th) {
+    font-weight: 600;
+  }
+  .main :global(img) {
+    border: 1px solid var(--rule);
+  }
+  .facts {
+    align-self: start;
+    background: var(--paper-card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  dl {
+    margin: 0;
+  }
+  dt {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 14px;
+  }
+  dt:first-child {
+    margin-top: 0;
+  }
+  dd {
+    margin: 4px 0 0;
+    overflow-wrap: anywhere;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+</style>

@@ -1,0 +1,10 @@
+{
+  "_comment": "Where each sub-project's site/ folder lives. Keys are the ids in src/content/subprojects/. repo: GitHub owner/name (for CI sync); localDir: the checkout under ../ (for npm run sync:local).",
+  "archival-structures": { "repo": "Data-Scopes/archival-structures", "localDir": "archival-structures" },
+  "archival-language": { "repo": "Data-Scopes/archival-language", "localDir": "language-of-the-archive" },
+  "formulation": { "repo": "Data-Scopes/formulation", "localDir": "formulation" },
+  "republic-segmentation": { "repo": "Data-Scopes/republic-segmentation", "localDir": "republic-segmentation" },
+  "republic-classification": { "repo": "Data-Scopes/republic-classification", "localDir": "republic-classification" },
+  "republic-letter-segmentation": { "localDir": "republic-letter-segmentation" },
+  "republic_ner_matching": { "repo": "Data-Scopes/republic_ner_matching", "localDir": "republic_ner_matching" }
+}

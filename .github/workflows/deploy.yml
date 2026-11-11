@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Pick up changes to sub-project site/ folders: a nightly rebuild, plus an optional ping from a
+  # sub-project repo (docs/subproject-sites.md, "Rebuilding the hub when site/ changes").
+  schedule:
+    - cron: '17 4 * * *'
+  repository_dispatch:
+    types: [subproject-site-updated]
 
 permissions:
   contents: read

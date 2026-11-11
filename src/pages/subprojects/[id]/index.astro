@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content';
+import Subproject from '../../../layouts/Subproject.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('subprojects');
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Subproject entry={entry}>
+  <h1>{entry.data.title}</h1>
+  <p class="lede">{entry.data.tagline}</p>
+  <div class="prose body">
+    <Content />
+  </div>
+</Subproject>
+
+<style>
+  .body {
+    margin-top: 28px;
+  }
+</style>

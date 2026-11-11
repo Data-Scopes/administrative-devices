@@ -12,8 +12,13 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # static output in dist/
 npm run check      # type-check content and components
-npm run sync       # pull site/summary.md from sub-project repos (optional, needs gh auth or GITHUB_TOKEN)
+npm run sync       # pull site/ from sub-project repos on GitHub (needs gh auth or GITHUB_TOKEN)
+npm run sync:local # same, from the checkouts next to this repo (../<dir>/site/), uncommitted work included
 ```
+
+Sub-projects write their own pages in a `site/` folder in their repo; the hub copies them in and serves them under
+`/subprojects/<id>/`. Conventions, preview and rebuild triggers: [docs/subproject-sites.md](docs/subproject-sites.md).
+The synced copies are committed here too, so the site builds without a token.
 
 ## Where things are
 
@@ -50,7 +55,8 @@ order: 20
 Summary text in Markdown.
 ```
 
-A sub-project can keep this file in its own repo as `site/summary.md`; `npm run sync` then copies it here.
+A sub-project can keep this file in its own repo as `site/summary.md`, with further pages in `site/pages/`; add it
+to `scripts/subprojects.json` and `npm run sync` copies them here.
 
 ## Deploying
 

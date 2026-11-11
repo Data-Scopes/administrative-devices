@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "sync": "node scripts/sync-subprojects.mjs"
+    "sync": "node scripts/sync-subprojects.mjs",
+    "sync:local": "node scripts/sync-subprojects.mjs --local"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
