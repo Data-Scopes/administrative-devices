@@ -36,8 +36,9 @@ const subprojects = (await getCollection('subprojects')).sort((a, b) => a.data.o
         loading="eager"
       />
       <figcaption>
-        The same scans as digitised (top) and with their structure recovered (bottom). Nationaal Archief 1.01.02,
-        inv. 3809, scans 63–68.
+        The same scans as digitised (top) and with their structure recovered (bottom). Scans: Nationaal Archief,
+        Staten-Generaal 1576–1796, archive 1.01.02, inv. 3809, scans 63–68 (<a
+          href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>).
       </figcaption>
     </div>
   </figure>
@@ -101,6 +102,9 @@ const subprojects = (await getCollection('subprojects')).sort((a, b) => a.data.o
     width: 100%;
     height: auto;
     border-radius: 4px;
+  }
+  figcaption a {
+    color: inherit;
   }
   figcaption {
     color: #b8bdc2;

@@ -56,13 +56,22 @@ A sub-project can keep this file in its own repo as `site/summary.md`; `npm run 
 
 1. Create the repo `Data-Scopes/administrative-devices` and push `main`.
 2. Settings → Pages → Source: **GitHub Actions**.
-3. Without a custom domain, the site is served at `https://data-scopes.github.io/administrative-devices/`.
-4. With a custom domain: add `public/CNAME` containing the domain, set the repository variables `SITE_URL=https://<domain>`
-   and `BASE_PATH=/`, and set up DNS as described in GitHub's Pages documentation.
-5. Optional: add the secret `SUBPROJECT_READ_TOKEN` (fine-grained PAT, read-only contents) to sync summaries from
+3. The site is served at **https://administrative-devices.org** (`public/CNAME`; defaults in `astro.config.mjs` and the
+   workflow). DNS for the apex domain: `A` records to GitHub Pages' IPs (185.199.108.153, .109.153, .110.153, .111.153),
+   optionally `AAAA` too, and a `CNAME` for `www` to `data-scopes.github.io`. Then Settings → Pages → Custom domain, and
+   tick "Enforce HTTPS" once the certificate is issued. Verify the domain for the org (Org settings → Pages) to guard
+   against takeover.
+4. `administrative-devices.net` is forwarded to the `.org` at the registrar with an HTTP 301 redirect. GitHub Pages serves
+   only one custom domain per site, so do not point the `.net` DNS at GitHub.
+5. To serve without the domain instead, set the repository variables `SITE_URL=https://data-scopes.github.io` and
+   `BASE_PATH=/administrative-devices`, and remove `public/CNAME`.
+6. Optional: add the secret `SUBPROJECT_READ_TOKEN` (fine-grained PAT, read-only contents) to sync summaries from
    private sub-project repos at build time.
 
 ## Image credits
 
-The scans in the communication images are from the Nationaal Archief, 1.01.02, inv. 3809.
-TODO: check reuse terms before launch.
+The scans in the communication images are from the Nationaal Archief, Staten-Generaal 1576–1796, archive 1.01.02,
+inv. 3809. The Nationaal Archief waives copyright on scans that carry a download button and a Public Domain or CC0 mark
+([terms](https://nationaalarchief.nl/research/gebruik-van-scans-van-fotos-kaarten-en-documenten)). Credit is not
+required but is appreciated, in the form "Nationaal Archief, [archive], nummer archiefinventaris [n], inventarisnummer [n]".
+Use the same form for any new NA scans, and check that each one carries the CC0/Public Domain mark.

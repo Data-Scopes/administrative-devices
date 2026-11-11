@@ -19,7 +19,9 @@ The website is the public backbone of the Administrative Devices project (Open e
 |----|----------|--------|-------|
 | D1 | Generator | **Astro** (static output) | Content collections for sub-projects; full design control. |
 | D2 | Hosting | **GitHub Pages**, repo `Data-Scopes/administrative-devices`, deployed by GitHub Actions | Public repo. |
-| D3 | Domain | **Custom domain, not chosen yet** | Set `SITE_URL` (repo variable) and add `public/CNAME` once chosen. See "Domain and sub-sites" below. |
+| D3 | Domain | **administrative-devices.org**; `administrative-devices.net` 301-forwards to it at the registrar | Decided 2026-11-11. Set in `public/CNAME`, `astro.config.mjs` and the workflow. Option A/B/C for sub-sites is still open (below); the scaffold follows A. |
+| D10 | Repo visibility | **Private until launch** | Decided 2026-11-11. The org is on the free plan, so Pages only works once the repo is public; until then the deploy job fails on each push (the build passes). |
+| D11 | Scan reuse | **Nationaal Archief scans are CC0** when they carry a download button and a CC0/Public Domain mark | [NA terms](https://nationaalarchief.nl/research/gebruik-van-scans-van-fotos-kaarten-en-documenten). Credit not required; we give one anyway: "Nationaal Archief, [archive], [archive no.], inv. [no.]". Other archives' scans need their own check. |
 | D4 | Language | **English only** | No i18n routing. Adding it later in Astro is a contained change. |
 | D5 | Sub-projects shown | **Core toolkit** (archival-structures, archival-language/LotA, formulation) and **REPUBLIC case** (republic-segmentation, -classification, -letter-segmentation, republic_ner_matching) | NAMA and VOC start pages are left out for now. They can be added later as one Markdown file each. |
 | D6 | Hub ↔ sub-project docs | **Mix**: the hub renders a summary page per sub-project; full docs live on the sub-project's own site | The summary is hand-written in the hub, or synced from the repo (below). |
@@ -87,9 +89,10 @@ republic-classification, the hub summary is the only public page until they go p
 
 1. **Scaffold** (this session): Astro project, design tokens, layout, the four sections with draft content from the
    proposal, sub-project collection, deploy workflow, sync script.
-2. **Launch**: choose the domain (D3), create the repo, check the draft texts and team affiliations, get reuse terms
-   and a credit line for the Nationaal Archief scans (inv. 1.01.02/3809), push, enable Pages
-   (Settings → Pages → Source: GitHub Actions), configure DNS.
+2. **Launch**: check the draft texts and team affiliations, make the repo public, enable Pages
+   (Settings → Pages → Source: GitHub Actions), configure DNS for `.org` and the `.net` forward (README, "Deploying"),
+   verify the domain for the org, enforce HTTPS. Done already: domain chosen, repo created (private), scan reuse
+   terms checked (D11).
 3. **Grow**: news, outputs (Zenodo DOIs), events; `site/summary.md` in each sub-project repo; Sphinx/MkDocs Pages sites
    for public sub-projects (archival-structures first, since it already has Sphinx docs), linked via `docs:`.
 4. **Later**: possibly a Dutch version, pages per use-case archive (NIOD, Amsterdam City Archives, National
@@ -97,7 +100,7 @@ republic-classification, the hub summary is the only public page until they go p
 
 ## Open questions
 
-- Domain name (D3) and option A, B or C above.
+- Option A, B or C above (the domain itself is settled, D3).
 - Team: roles and affiliations for everyone (marked `TODO` in `src/data/team.yaml`); the two eScience RSEs.
 - Project start date and duration (the announcement draft is missing these too).
 - Contact address for the site footer.

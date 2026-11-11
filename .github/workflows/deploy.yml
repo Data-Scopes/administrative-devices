@@ -18,11 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Repository variables (Settings → Secrets and variables → Actions → Variables).
-      # With a custom domain: SITE_URL=https://<domain>, BASE_PATH=/ (and add public/CNAME).
-      # Without one: leave both unset to serve at https://data-scopes.github.io/administrative-devices/.
-      SITE_URL: ${{ vars.SITE_URL || 'https://data-scopes.github.io' }}
-      BASE_PATH: ${{ vars.BASE_PATH || '/administrative-devices' }}
+      # Served at the custom domain in public/CNAME. Repository variables can override these
+      # (Settings → Secrets and variables → Actions → Variables), e.g. SITE_URL=https://data-scopes.github.io
+      # and BASE_PATH=/administrative-devices to serve without the domain.
+      SITE_URL: ${{ vars.SITE_URL || 'https://administrative-devices.org' }}
+      BASE_PATH: ${{ vars.BASE_PATH || '/' }}
       HAS_SYNC_TOKEN: ${{ secrets.SUBPROJECT_READ_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
